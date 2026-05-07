@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ClozeFlow · A-Level数学AI学习平台</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--o:#C96A2A;--o1:#F5EBE0;--o2:#EDD5BB;--o3:#D4956A;--o4:#A04E1A;--o5:#7A3810;
+--bg:#FFFFFF;--bg2:#F8F5F1;--t1:#1A1A1A;--t2:#666;--t3:#999;--bd:rgba(0,0,0,0.08);--bds:rgba(0,0,0,0.15);
+--radius-md:8px;--radius-lg:12px}
+body{font-family:-apple-system,'Helvetica Neue',sans-serif;background:var(--bg);color:var(--t1)}
+
+/* NAV */
+.nav{display:flex;align-items:center;justify-content:space-between;padding:14px 40px;border-bottom:0.5px solid var(--bd);background:var(--bg);position:sticky;top:0;z-index:100}
+.logo{display:flex;align-items:center;gap:9px;font-size:16px;font-weight:500;color:var(--t1);text-decoration:none}
+.logo-mark{width:28px;height:28px;background:var(--o);border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo em{color:var(--o);font-style:normal}
+.nav-r{display:flex;align-items:center;gap:22px}
+.nl{font-size:13px;color:var(--t2);background:none;border:none;cursor:pointer;padding:0;font-family:inherit}
+.nl:hover{color:var(--t1)}
+.nav-cta{padding:7px 18px;background:var(--o);color:#fff;border:none;border-radius:var(--radius-md);font-size:13px;font-weight:500;cursor:pointer}
+.nav-cta:hover{background:var(--o4)}
+
+/* HERO */
+.hero{padding:80px 40px 64px;text-align:center;max-width:720px;margin:0 auto}
+.pill{display:inline-flex;align-items:center;gap:7px;padding:5px 14px;background:var(--o1);border-radius:99px;font-size:12px;font-weight:500;color:var(--o);margin-bottom:26px;border:0.5px solid var(--o2)}
+.pill-dot{width:6px;height:6px;border-radius:50%;background:var(--o)}
+h1{font-size:44px;font-weight:600;line-height:1.18;letter-spacing:-0.8px;margin-bottom:18px}
+h1 em{color:var(--o);font-style:normal}
+.hero-p{font-size:16px;color:var(--t2);line-height:1.75;max-width:480px;margin:0 auto 38px}
+.hbtns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-p{padding:13px 30px;background:var(--o);color:#fff;border:none;border-radius:var(--radius-md);font-size:15px;font-weight:500;cursor:pointer}
+.btn-p:hover{background:var(--o4)}
+.btn-g{padding:13px 30px;background:transparent;color:var(--t1);border:0.5px solid var(--bds);border-radius:var(--radius-md);font-size:15px;cursor:pointer}
+.btn-g:hover{background:var(--bg2)}
+.stats{display:flex;gap:48px;justify-content:center;margin-top:52px;padding-top:40px;border-top:0.5px solid var(--bd);flex-wrap:wrap}
+.sn{font-size:30px;font-weight:600;color:var(--o)}
+.sl{font-size:13px;color:var(--t2);margin-top:3px}
+
+/* SECTIONS */
+.divider{height:0.5px;background:var(--bd)}
+.sec{max-width:880px;margin:0 auto;padding:68px 40px}
+.sec-lbl{font-size:11px;font-weight:600;color:var(--o);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px}
+.sec-t{font-size:28px;font-weight:600;margin-bottom:12px}
+.sec-s{font-size:15px;color:var(--t2);line-height:1.7;max-width:500px;margin-bottom:38px}
+
+/* FEATURES */
+.fg{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.fc{padding:20px;border:0.5px solid var(--bd);border-radius:var(--radius-lg);background:var(--bg)}
+.fi{width:34px;height:34px;border-radius:var(--radius-md);background:var(--o1);display:flex;align-items:center;justify-content:center;margin-bottom:12px;border:0.5px solid var(--o2);font-size:16px}
+.ft{font-size:14px;font-weight:500;margin-bottom:5px}
+.fd{font-size:13px;color:var(--t2);line-height:1.6}
+
+/* HOW IT WORKS */
+.howit{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+@media(max-width:600px){.howit{grid-template-columns:1fr}}
+.hw{padding:24px 20px;border:0.5px solid var(--bd);border-radius:var(--radius-lg)}
+.hw-num{font-size:28px;font-weight:600;color:var(--o2);margin-bottom:14px}
+.hw-t{font-size:15px;font-weight:500;margin-bottom:8px}
+.hw-d{font-size:13px;color:var(--t2);line-height:1.65}
+
+/* TRY IT */
+.tryit{border:0.5px solid var(--bd);border-radius:var(--radius-lg);overflow:hidden}
+.try-bar{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;background:var(--o1);border-bottom:0.5px solid var(--o2);flex-wrap:wrap;gap:10px}
+.try-tabs{display:flex;gap:4px;flex-wrap:wrap}
+.tt{padding:6px 13px;font-size:12px;border:none;background:transparent;cursor:pointer;border-radius:6px;color:var(--o4);font-family:inherit;font-weight:500;white-space:nowrap}
+.tt.on{background:var(--o);color:#fff}
+.tt:hover:not(.on){background:var(--o2)}
+.atog{display:flex;align-items:center;gap:7px;cursor:pointer;font-size:12px;color:var(--o4)}
+.sw{width:32px;height:18px;border-radius:99px;background:var(--o2);position:relative;transition:background 0.2s;flex-shrink:0;border:0.5px solid var(--o3)}
+.sw.on{background:var(--o)}
+.swk{width:14px;height:14px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;transition:left 0.2s}
+.sw.on .swk{left:16px}
+.try-body{display:grid;grid-template-columns:1fr 290px}
+@media(max-width:700px){.try-body{grid-template-columns:1fr}}
+.qpane{padding:24px 22px;border-right:0.5px solid var(--bd);overflow-y:auto;max-height:520px}
+.qpane::-webkit-scrollbar{display:none}
+.qm{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
+.bo{padding:3px 10px;border-radius:99px;font-size:11px;font-weight:500;background:var(--o1);color:var(--o4);border:0.5px solid var(--o2)}
+.bg-badge{padding:3px 10px;border-radius:99px;font-size:11px;background:var(--bg2);color:var(--t2)}
+.qt,.pt{font-size:15px;line-height:2.4;color:var(--t1)}
+.pt{font-size:14px}
+.fml{background:var(--o1);border-left:3px solid var(--o);padding:10px 16px;margin:10px 0;font-family:monospace;font-size:15px;text-align:center;color:var(--o5)}
+.part{margin-top:14px;padding-top:12px;border-top:0.5px solid var(--bd)}
+.pl{font-size:13px;font-weight:500;color:var(--o);margin-bottom:5px}
+.pm{font-size:11px;color:var(--t3);margin-left:5px;font-weight:400}
+
+/* WORD HIGHLIGHTS */
+.w{display:inline-block;position:relative;cursor:pointer;vertical-align:bottom}
+.wcn{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);font-size:10px;font-weight:500;color:var(--o4);white-space:nowrap;opacity:0;pointer-events:none;line-height:1.3;margin-bottom:2px;transition:opacity 0.15s;background:#fff;border:0.5px solid var(--o2);padding:2px 6px;border-radius:4px;z-index:20;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
+.weng{background:var(--o1);border-bottom:1.5px dotted var(--o);border-radius:2px;padding:0 2px;color:var(--o4);font-weight:500;display:inline;transition:background 0.12s}
+.w:hover .weng{background:var(--o2)}
+.w.show .wcn,.w.auto .wcn{opacity:1}
+
+/* WORKING AREA */
+.work{padding:16px 22px;border-top:0.5px solid var(--bd)}
+.wl{font-size:11px;font-weight:600;color:var(--t2);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:6px}
+.wta{width:100%;border:0.5px solid var(--bds);border-radius:var(--radius-md);padding:10px 12px;font-size:13px;color:var(--t1);background:var(--bg);resize:none;height:80px;font-family:inherit}
+.wta:focus{outline:none;border-color:var(--o);box-shadow:0 0 0 2px var(--o1)}
+.hr{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px;align-items:center}
+.bh{padding:7px 12px;font-size:12px;border-radius:var(--radius-md);cursor:pointer;border:0.5px solid;font-weight:500;font-family:inherit}
+.bh1{background:#FEF6EC;color:#854F0B;border-color:#EF9F27}
+.bh2{background:var(--o1);color:var(--o4);border-color:var(--o3)}
+.bh3{background:#EAF3DE;color:#276011;border-color:#97C459}
+.bsub{padding:8px 18px;background:var(--o);color:#fff;border:none;border-radius:var(--radius-md);font-size:13px;font-weight:500;cursor:pointer;margin-left:auto;font-family:inherit}
+.bsub:hover{background:var(--o4)}
+
+/* RESULT */
+.res-card{margin:14px 0 0;padding:14px;background:var(--o1);border-radius:var(--radius-md);border:0.5px solid var(--o2)}
+.rs{display:flex;align-items:baseline;gap:6px;margin-bottom:6px}
+.rsn{font-size:36px;font-weight:600;color:var(--o)}
+.rsd{font-size:14px;color:var(--t2)}
+.rfb{font-size:13px;color:var(--t2);line-height:1.6;margin-bottom:10px}
+.msr{display:flex;gap:8px;padding:7px 0;border-bottom:0.5px solid var(--o2);align-items:flex-start}
+.msdot{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;flex-shrink:0;margin-top:2px}
+.ms-t{font-size:12px;color:var(--t1);line-height:1.5}
+.ms-k{font-size:10px;color:var(--t3)}
+
+/* AI PANEL */
+.aip{display:flex;flex-direction:column;min-height:520px;border-left:0.5px solid var(--bd)}
+.ai-hd{padding:14px 16px;border-bottom:0.5px solid var(--bd);display:flex;align-items:center;gap:10px;background:var(--o1)}
+.ai-av{width:30px;height:30px;border-radius:50%;background:var(--o2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--o4);flex-shrink:0;border:0.5px solid var(--o3)}
+.ai-name{font-size:13px;font-weight:500;color:var(--t1)}
+.ai-sub{font-size:11px;color:var(--o4)}
+.mode-pill{font-size:11px;background:var(--o2);color:var(--o4);padding:3px 9px;border-radius:99px;border:0.5px solid var(--o3);margin-left:auto}
+.ai-msgs{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px;min-height:200px;max-height:260px}
+.ai-msgs::-webkit-scrollbar{display:none}
+.mai{background:var(--o1);padding:9px 12px;border-radius:4px 12px 12px 12px;font-size:13px;line-height:1.65;align-self:flex-start;max-width:96%;color:var(--t1);border:0.5px solid var(--o2)}
+.mu{background:var(--o);padding:9px 12px;border-radius:12px 4px 12px 12px;font-size:13px;line-height:1.65;align-self:flex-end;max-width:96%;color:#fff}
+.mth{padding:6px 4px;font-size:12px;color:var(--t3);font-style:italic;align-self:flex-start}
+.qrow{display:flex;gap:5px;overflow-x:auto;padding:8px 12px;border-top:0.5px solid var(--bd)}
+.qrow::-webkit-scrollbar{display:none}
+.qb{white-space:nowrap;padding:5px 10px;background:var(--bg2);border:0.5px solid var(--bd);border-radius:99px;font-size:11px;color:var(--t2);cursor:pointer;flex-shrink:0;font-family:inherit}
+.qb:hover{background:var(--o1);color:var(--o4);border-color:var(--o2)}
+.air{display:flex;gap:8px;padding:9px 12px 14px}
+.ain{flex:1;padding:8px 12px;border:0.5px solid var(--bds);border-radius:99px;font-size:13px;background:var(--bg2);color:var(--t1);font-family:inherit}
+.ain:focus{outline:none;border-color:var(--o)}
+.aisen{width:32px;height:32px;border-radius:50%;background:var(--o);border:none;cursor:pointer;color:#fff;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.aisen:hover{background:var(--o4)}
+
+/* PRICING */
+.pc-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:460px}
+@media(max-width:500px){.pc-grid{grid-template-columns:1fr}}
+.pc{padding:24px;border:0.5px solid var(--bd);border-radius:var(--radius-lg);background:var(--bg)}
+.pc.hot{border:2px solid var(--o);background:var(--o1)}
+.pc-badge{display:inline-block;padding:3px 10px;background:var(--o);border-radius:99px;font-size:11px;color:#fff;font-weight:500;margin-bottom:12px}
+.pc-name{font-size:14px;font-weight:500;margin-bottom:8px}
+.pc-price{font-size:36px;font-weight:600;margin-bottom:2px}
+.pc-per{font-size:13px;color:var(--t2);margin-bottom:16px}
+.pc-feats{list-style:none;display:flex;flex-direction:column;gap:7px}
+.pc-feats li{font-size:13px;color:var(--t2);display:flex;gap:7px;align-items:flex-start}
+.pc-feats li::before{content:"✓";color:var(--o);font-weight:600;flex-shrink:0}
+
+/* FOOTER */
+.footer{padding:32px 40px;text-align:center;border-top:0.5px solid var(--bd);font-size:13px;color:var(--t2)}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="logo">
+    <div class="logo-mark">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M7 1L13 12H1L7 1Z" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/>
+        <path d="M4 8.5H10" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
+    </div>
+    Cloze<em>Flow</em>
+  </div>
+  <div class="nav-r">
+    <button class="nl" onclick="go('feat')">功能</button>
+    <button class="nl" onclick="go('how')">使用方式</button>
+    <button class="nl" onclick="go('try')">试用</button>
+    <button class="nl" onclick="go('price')">定价</button>
+    <button class="nav-cta" onclick="go('try')">免费试用</button>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="pill"><div class="pill-dot"></div>专为中国 A-Level 学生打造</div>
+  <h1>读懂每一道 <em>A-Level</em><br>数学题</h1>
+  <p class="hero-p">Edexcel IAL P1–P4 · M1·M2 · S1·S2 全套真题。点击难词中文立现，AI 助教苏格拉底式引导，不直接给答案。</p>
+  <div class="hbtns">
+    <button class="btn-p" onclick="go('try')">立即试题 →</button>
+    <button class="btn-g" onclick="go('feat')">了解功能</button>
+  </div>
+  <div class="stats">
+    <div><div class="sn">8</div><div class="sl">考试科目</div></div>
+    <div><div class="sn">200+</div><div class="sl">套真题</div></div>
+    <div><div class="sn">2000+</div><div class="sl">道题目</div></div>
+    <div><div class="sn">¥100</div><div class="sl">每月</div></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="sec" id="feat">
+  <div class="sec-lbl">核心功能</div>
+  <div class="sec-t">专为看不懂英文题目的你</div>
+  <p class="sec-s">不是翻译软件，是真正理解数学的方式。</p>
+  <div class="fg">
+    <div class="fc"><div class="fi">字</div><div class="ft">点词出中文</div><div class="fd">点击橙色词汇，中文释义立刻浮现在词正上方。开启自动模式全程无需点击。</div></div>
+    <div class="fc"><div class="fi">长</div><div class="ft">长按翻译整句</div><div class="fd">按住段落 0.6 秒，AI 将整段翻译成中文显示，方便完整理解题意。</div></div>
+    <div class="fc"><div class="fi">AI</div><div class="ft">苏格拉底式 AI 引导</div><div class="fd">只给提示和引导，不直接给答案——除非你主动选择「看答案」。</div></div>
+    <div class="fc"><div class="fi">✓</div><div class="ft">AI 批改 + Mark Scheme</div><div class="fd">按 Edexcel 官方标准逐点批改，每个 M1/A1/B1 标记都有中文说明。</div></div>
+    <div class="fc"><div class="fi">✕</div><div class="ft">章节错题本</div><div class="fd">错题自动按章节归类，Integration、Vectors、DEs 各成体系。</div></div>
+    <div class="fc"><div class="fi">P4</div><div class="ft">P1–P4 · M1 M2 · S1 S2</div><div class="fd">2019–2024 年全套 Edexcel IAL 真题，考完第一时间更新。</div></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="sec" id="how">
+  <div class="sec-lbl">使用方式</div>
+  <div class="sec-t">三步开始</div>
+  <p class="sec-s" style="margin-bottom:32px">不需要任何设置，打开即用。</p>
+  <div class="howit">
+    <div class="hw"><div class="hw-num">01</div><div class="hw-t">选题目</div><div class="hw-d">按科目、年份、章节浏览全部真题。每道题标注分值和考点，一眼找到想练的。</div></div>
+    <div class="hw"><div class="hw-num">02</div><div class="hw-t">读题 + 做题</div><div class="hw-d">点击橙色词立刻查中文。卡住了就问 AI，它会一步步引导你想到正确方向。</div></div>
+    <div class="hw"><div class="hw-num">03</div><div class="hw-t">提交批改</div><div class="hw-d">写出解题步骤后提交，AI 按官方评分标准逐点打分，错的自动加入错题本。</div></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="sec" id="try">
+  <div class="sec-lbl">互动试用</div>
+  <div class="sec-t">P4 · Ch9 · Differential Equations</div>
+  <p class="sec-s">点击橙色词查中文，开自动模式全程显示。右侧 AI 随时引导，写完提交批改。</p>
+  <div class="tryit">
+    <div class="try-bar">
+      <div class="try-tabs">
+        <button class="tt on" onclick="swQ(0,this)">Q1 · Separable DE</button>
+        <button class="tt" onclick="swQ(1,this)">Q2 · Integrating Factor</button>
+        <button class="tt" onclick="swQ(2,this)">Q3 · Second Order</button>
+      </div>
+      <div class="atog" onclick="toggleAuto()">
+        <div class="sw" id="auto-sw"><div class="swk"></div></div>
+        <span>自动显示中文</span>
+      </div>
+    </div>
+    <div class="try-body">
+      <div class="qpane" id="qpane"></div>
+      <div class="aip">
+        <div class="ai-hd">
+          <div class="ai-av">AI</div>
+          <div style="flex:1">
+            <div class="ai-name">AI 助教</div>
+            <div class="ai-sub">ClozeFlow</div>
+          </div>
+          <span class="mode-pill">引导模式</span>
+        </div>
+        <div class="ai-msgs" id="ai-msgs"></div>
+        <div class="qrow">
+          <button class="qb" onclick="qs('给我一个提示，不要告诉我答案')">💡 提示</button>
+          <button class="qb" onclick="qs('解释解题思路')">思路</button>
+          <button class="qb" onclick="qs('用中文解释这个方法')">中文解释</button>
+          <button class="qb" onclick="qs('我想看完整答案')">看答案</button>
+        </div>
+        <div class="air">
+          <input class="ain" id="ai-inp" placeholder="问 AI 任何问题…" onkeydown="if(event.key==='Enter')sendMsg()"/>
+          <button class="aisen" onclick="sendMsg()">↑</button>
+        </div>
+      </div>
+    </div>
+    <div class="work">
+      <div class="wl">Your working</div>
+      <textarea class="wta" id="wta" placeholder="写出解题步骤…展示完整推导过程可得满分"></textarea>
+      <div class="hr">
+        <button class="bh bh1" onclick="askH('hint')">💡 提示</button>
+        <button class="bh bh2" onclick="askH('approach')">🧠 思路</button>
+        <button class="bh bh3" onclick="askH('answer')">✓ 看答案</button>
+        <button class="bsub" onclick="submitAns()">提交批改</button>
+      </div>
+      <div id="res-area"></div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="sec" id="price">
+  <div class="sec-lbl">定价</div>
+  <div class="sec-t">简单透明</div>
+  <p class="sec-s" style="margin-bottom:28px">随时取消，无隐藏费用。</p>
+  <div class="pc-grid">
+    <div class="pc">
+      <div class="pc-name">免费版</div>
+      <div class="pc-price">¥0</div>
+      <div class="pc-per">永久免费</div>
+      <ul class="pc-feats">
+        <li>P4 第9章全部题目</li>
+        <li>点词翻译功能</li>
+        <li>AI 基础对话</li>
+        <li>每天 3 次 AI 批改</li>
+      </ul>
+    </div>
+    <div class="pc hot">
+      <div class="pc-badge">Pro</div>
+      <div class="pc-name">专业版</div>
+      <div class="pc-price">¥100</div>
+      <div class="pc-per">每月</div>
+      <ul class="pc-feats">
+        <li>全部 8 个科目</li>
+        <li>200+ 套真题</li>
+        <li>无限 AI 批改</li>
+        <li>智能错题本</li>
+        <li>长按句子翻译</li>
+        <li>离线做题</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+<div class="footer">© 2025 ClozeFlow · Edexcel IAL A-Level Mathematics · 专为中国国际学生打造</div>
+
+<script>
+const DICT={
+  "separable":"可分离的","differential equation":"微分方程","differential equations":"微分方程",
+  "general solution":"通解","particular solution":"特解","integrating factor":"积分因子",
+  "complementary function":"余函数 CF","particular integral":"特解积分 PI",
+  "second order":"二阶方程","homogeneous":"齐次的","auxiliary equation":"辅助方程",
+  "arbitrary constant":"任意常数","boundary condition":"边界条件",
+  "hence":"由此（用上一步！）","Hence":"由此","Show":"证明（需完整步骤）",
+  "Find":"求","Given":"已知","satisfies":"满足","substituting":"代入",
+  "coefficient":"系数","distinct":"不同实根","repeated":"重根","trial":"试探函数",
+  "explicitly":"显函数形式","valid":"有效的",
+};
+const CONS=["separable","differential equation","differential equations","general solution","particular solution","integrating factor","complementary function","particular integral","second order","homogeneous","auxiliary equation","arbitrary constant","boundary condition"];
+const QS=[
+  {id:0,topic:"Separable DE",sess:"June 2023 · P4",marks:9,
+   intro:"A curve C passes through the point (0, 1) and satisfies the differential equation",
+   formula:"dy/dx = 2xy²",
+   parts:[
+     {l:"(a)",t:"Find the general solution of the differential equation, giving your answer in the form y = f(x).",m:5,
+      ms:[{t:"Separate variables: ∫ y⁻² dy = ∫ 2x dx",k:"M1",p:true},{t:"Integrate both sides: −1/y = x² + c",k:"A1",p:true},{t:"Arbitrary constant c stated explicitly",k:"A1",p:true},{t:"Rearrange to make y the subject",k:"M1",p:false},{t:"y = 1/(c − x²)",k:"A1",p:false}]},
+     {l:"(b)",t:"Hence find the particular solution satisfying the boundary condition y = 1 when x = 0.",m:2,
+      ms:[{t:"Substitute x = 0, y = 1 → c = 1",k:"M1",p:false},{t:"y = 1/(1 − x²)",k:"A1",p:false}]},
+     {l:"(c)",t:"State the range of values of x for which the particular solution is valid.",m:2,
+      ms:[{t:"Denominator cannot equal zero",k:"B1",p:false},{t:"−1 < x < 1",k:"B1",p:false}]},
+   ],
+   greet:"这道题考的是分离变量法 ✦\n\ndy/dx = 2xy² 里，能不能把含 y 的移到左边，含 x 的移到右边？"},
+  {id:1,topic:"Integrating Factor",sess:"January 2023 · P4",marks:8,
+   intro:"Find the general solution of the differential equation",
+   formula:"dy/dx + 2y = e^(−x)",
+   parts:[
+     {l:"(a)",t:"Show that an integrating factor for this equation is e^(2x).",m:2,
+      ms:[{t:"P(x) = 2, so IF = e^(∫2 dx)",k:"M1",p:true},{t:"= e^(2x) correctly shown",k:"A1",p:true}]},
+     {l:"(b)",t:"Hence find the general solution, expressing y explicitly in terms of x.",m:6,
+      ms:[{t:"Multiply by e^(2x): d/dx[y·e^(2x)] = e^x",k:"M1",p:true},{t:"Integrate: y·e^(2x) = e^x + c",k:"A1",p:true},{t:"Divide through by e^(2x)",k:"M1",p:false},{t:"y = e^(−x) + c·e^(−2x)",k:"A1",p:false}]},
+   ],
+   greet:"积分因子法！标准形式是 dy/dx + P(x)y = Q(x)\n\n这道题里 P(x) 等于多少？"},
+  {id:2,topic:"Second Order DE",sess:"October 2023 · P4",marks:10,
+   intro:"Find the general solution of the second order differential equation",
+   formula:"d²y/dx² − 5(dy/dx) + 6y = 2x + 1",
+   parts:[
+     {l:"(a)",t:"Find the complementary function by solving the auxiliary equation.",m:3,
+      ms:[{t:"Auxiliary equation: m² − 5m + 6 = 0",k:"M1",p:true},{t:"(m−2)(m−3)=0 → m = 2 or m = 3",k:"A1",p:true},{t:"CF = Ae^(2x) + Be^(3x)",k:"A1",p:true}]},
+     {l:"(b)",t:"Find a particular integral using a trial function of the form y = ax + b.",m:3,
+      ms:[{t:"Substitute y = ax + b into the DE",k:"M1",p:false},{t:"Solve: a = 1/3, b = 4/9",k:"A1",p:false},{t:"PI = x/3 + 4/9",k:"A1",p:false}]},
+     {l:"(c)",t:"Hence state the general solution. Given y = 2 and dy/dx = 3 when x = 0, find the particular solution.",m:4,
+      ms:[{t:"GS = Ae^(2x) + Be^(3x) + x/3 + 4/9 stated",k:"B1",p:false},{t:"Apply both initial conditions",k:"M1",p:false},{t:"Solve simultaneous equations for A and B",k:"A1",p:false},{t:"Correct values of A and B",k:"A1",p:false}]},
+   ],
+   greet:"二阶微分方程，三步走 ✦\n① 辅助方程 → CF\n② 试探函数 → PI\n③ GS = CF + PI\n\n先来第一步：写出辅助方程，m 满足什么？"},
+];
+
+let curQ=0,autoMode=false,msgs=[];
+
+function tok(text){
+  const keys=Object.keys(DICT).sort((a,b)=>b.length-a.length);
+  let r=text;const phs={};let i=0;
+  keys.forEach(k=>{
+    const re=new RegExp('(?<![\\w])'+k.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'(?![\\w])','gi');
+    r=r.replace(re,m=>{
+      const ph='§'+i+'§';
+      const isC=CONS.some(c=>c.toLowerCase()===k.toLowerCase());
+      const ac=(autoMode&&isC)?' auto':'';
+      phs[ph]='<span class="w'+ac+'" onclick="this.classList.toggle(\'show\')"><span class="wcn">'+DICT[k]+'</span><span class="weng">'+m+'</span></span>';
+      i++;return ph;
+    });
+  });
+  Object.keys(phs).forEach(p=>{r=r.replace(p,phs[p]);});
+  return r;
+}
+
+function renderQ(qi){
+  curQ=qi;const q=QS[qi];
+  let html='<div class="qm"><span class="bo">'+q.topic+'</span><span class="bg-badge">'+q.sess+'</span><span class="bg-badge">'+q.marks+' marks</span></div>';
+  html+='<div class="qt">'+tok(q.intro)+'</div><div class="fml">'+q.formula+'</div>';
+  q.parts.forEach(p=>{
+    html+='<div class="part"><div class="pl">'+p.l+'<span class="pm">['+p.m+'m]</span></div><div class="pt">'+tok(p.t)+'</div></div>';
+  });
+  document.getElementById('qpane').innerHTML=html;
+  document.getElementById('wta').value='';
+  document.getElementById('res-area').innerHTML='';
+  const el=document.getElementById('ai-msgs');
+  el.innerHTML='';msgs=[{role:'assistant',content:q.greet}];
+  addMsg('assistant',q.greet);
+}
+
+function swQ(i,el){
+  document.querySelectorAll('.tt').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');renderQ(i);
+}
+
+function toggleAuto(){
+  autoMode=!autoMode;
+  document.getElementById('auto-sw').classList.toggle('on',autoMode);
+  renderQ(curQ);
+}
+
+function addMsg(role,text){
+  const el=document.getElementById('ai-msgs');
+  const d=document.createElement('div');
+  d.className=role==='user'?'mu':role==='think'?'mth':'mai';
+  d.innerHTML=text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');
+  el.appendChild(d);el.scrollTop=el.scrollHeight;return d;
+}
+
+const API_KEY='';
+const SYS='你是ClozeFlow的AI助教，帮助中国国际学生学Edexcel IAL A-Level数学。苏格拉底式教学：绝不直接给出完整答案，用反问引导学生自己发现。若学生说"我想看答案"先温柔确认一次。中文回复，数学符号英文。简洁不超过3句。当前题目：';
+
+async function callAI(msg){
+  const q=QS[curQ];
+  const think=addMsg('think','思考中…');
+  try{
+    const r=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':API_KEY,'anthropic-version':'2023-06-01'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:400,
+        system:SYS+q.intro+' '+q.formula,
+        messages:[...msgs.filter(m=>m.role!=='think').map(m=>({role:m.role,content:m.content})),{role:'user',content:msg}]
+      })
+    });
+    const d=await r.json();
+    think.remove();
+    const rep=d.content&&d.content[0]?d.content[0].text:fb(msg);
+    msgs.push({role:'user',content:msg},{role:'assistant',content:rep});
+    addMsg('assistant',rep);
+  }catch(e){
+    think.remove();
+    const rep=fb(msg);
+    msgs.push({role:'user',content:msg},{role:'assistant',content:rep});
+    addMsg('assistant',rep);
+  }
+}
+
+function fb(m){
+  if(m.includes('提示'))return'先看看等号两边，能把含 y 和含 x 的分开吗？';
+  if(m.includes('思路'))return'识别题型 → 选方法 → 写第一步。这道题用什么方法？';
+  if(m.includes('答案'))return'确定要看吗？自己想出来更有成就感哦，真的要看吗？';
+  return'你卡在哪一步了？告诉我，一起想。';
+}
+
+async function sendMsg(){
+  const i=document.getElementById('ai-inp');
+  const msg=i.value.trim();if(!msg)return;
+  i.value='';addMsg('user',msg);await callAI(msg);
+}
+
+function qs(msg){document.getElementById('ai-inp').value=msg;sendMsg();}
+
+async function askH(mode){
+  const q=QS[curQ];
+  const pm={
+    hint:'学生做"'+q.topic+'"卡住了，给一个苏格拉底式提示，反问引导，不给步骤答案，最多2句',
+    approach:'解释"'+q.topic+'"整体策略，不做具体计算，3句话',
+    answer:'给出完整解答，按：'+q.parts.flatMap(p=>p.ms.map(m=>'['+m.k+'] '+m.t)).join('；')
+  };
+  addMsg('user',mode==='hint'?'💡 给提示':mode==='approach'?'讲解思路':'我想看完整答案');
+  await callAI(pm[mode]);
+}
+
+function submitAns(){
+  const ans=document.getElementById('wta').value.trim();
+  if(!ans){alert('请先写出解题步骤！');return;}
+  const q=QS[curQ];
+  const allMs=q.parts.flatMap(p=>p.ms);
+  const score=Math.round((allMs.filter(m=>m.p).length/allMs.length)*q.marks);
+  let html='<div class="res-card"><div class="rs"><span class="rsn">'+score+'</span><span class="rsd">/ '+q.marks+' marks</span></div>'
+    +'<div class="rfb">'+(score/q.marks>=0.8?'很好，解题思路扎实！':score/q.marks>=0.5?'不错，注意展示完整步骤。':'可以加强，建议让 AI 帮你分析。')+'</div>'
+    +'<div style="font-size:11px;font-weight:600;color:#999;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px">Mark scheme</div>';
+  allMs.forEach(m=>{
+    html+='<div class="msr"><div class="msdot" style="background:'+(m.p?'#639922':'#E24B4A')+'">'+(m.p?'✓':'✕')+'</div><div><div class="ms-t">'+m.t+'</div><div class="ms-k">['+m.k+']</div></div></div>';
+  });
+  html+='</div>';
+  document.getElementById('res-area').innerHTML=html;
+  document.getElementById('res-area').scrollIntoView({behavior:'smooth',block:'nearest'});
+  addMsg('user','我提交答案了');
+  callAI('学生得了'+score+'/'+q.marks+'分。'+(score/q.marks<0.6?'温柔鼓励，帮找问题所在。':'表扬做得好的地方。')+'2句话。');
+}
+
+function go(id){
+  const el=document.getElementById(id);
+  if(el)el.scrollIntoView({behavior:'smooth'});
+}
+
+renderQ(0);
+</script>
+</body>
+</html>
